@@ -27,9 +27,23 @@
                     </p>
                 </div>
 
-                <div class="flex flex-wrap gap-3">
-                    <a href="{{ route('books.index') }}" class="btn-secondary" dusk="nav-books-index">Daftar Buku</a>
-                    <a href="{{ route('books.create') }}" class="btn-primary" dusk="nav-books-create">Tambah Buku</a>
+                <div class="flex flex-wrap items-center gap-3">
+                    @auth
+                        <span class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300" dusk="nav-user-label">
+                            {{ auth()->user()->name }}
+                        </span>
+                        <a href="{{ route('books.index') }}" class="btn-secondary" dusk="nav-books-index">Daftar Buku</a>
+                        <a href="{{ route('books.create') }}" class="btn-primary" dusk="nav-books-create">Tambah Buku</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn-secondary" dusk="nav-logout-button">Logout</button>
+                        </form>
+                    @endauth
+
+                    @guest
+                        <a href="{{ route('login') }}" class="btn-secondary" dusk="nav-login-button">Login</a>
+                        <a href="{{ route('register') }}" class="btn-primary" dusk="nav-register-button">Register</a>
+                    @endguest
                 </div>
             </div>
         </header>

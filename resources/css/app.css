@@ -119,4 +119,8 @@
     .pagination-wrap nav .relative.inline-flex {
         @apply rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10;
     }
+
+    .auth-shell {
+        @apply mx-auto max-w-lg rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/10 backdrop-blur-xl sm:p-8;
+    }
 }
