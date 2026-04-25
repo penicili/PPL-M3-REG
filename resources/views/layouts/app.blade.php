@@ -322,7 +322,7 @@
         <header class="mb-8 rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-5">
             <nav class="flex flex-wrap items-center justify-between gap-3">
                 <a href="{{ auth()->check() ? route('books.index') : route('login') }}" class="text-lg font-bold tracking-tight text-slate-900">
-                    EAD Library
+                    EAD Library - Laravel App
                 </a>
 
                 <div class="flex flex-wrap items-center gap-16">
