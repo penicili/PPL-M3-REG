@@ -1,66 +1,36 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Skenario Uji Dusk - EAD Library
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Skenario pengujian end-to-end berbasis Laravel Dusk untuk aplikasi CRUD buku dengan autentikasi.
 
-## About Laravel
+### Prasyarat
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Database testing siap digunakan.
+2. Browser driver untuk Dusk sudah dikonfigurasi.
+3. Jalankan migration dan seed jika dibutuhkan.
+4. Jalankan test dari root project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Daftar Skenario
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| No | Skenario | Tujuan | Langkah | Ekspektasi |
+| --- | --- | --- | --- | --- |
+| 1 | Registrasi Berhasil | Memastikan user baru bisa register dan diarahkan ke dashboard buku. | 1. Buka halaman `/register`.<br>2. Isi nama, email unik, password, konfirmasi password.<br>3. Klik tombol `Register`. | 1. Berpindah ke path `/books`.<br>2. Muncul pesan `Registrasi berhasil.`.<br>3. Halaman menampilkan `Daftar Buku`. |
+| 2 | Login Berhasil | Memastikan user terdaftar bisa login. | 1. Buka halaman `/login`.<br>2. Isi email dan password valid.<br>3. Klik tombol `Login`. | 1. Berpindah ke path `/books`.<br>2. Muncul pesan `Login berhasil.`.<br>3. Halaman menampilkan daftar buku. |
+| 3 | Tambah Buku Berhasil | Memastikan alur create data buku berjalan. | 1. Login sebagai user valid.<br>2. Buka `/books/create`.<br>3. Isi form buku lengkap.<br>4. Klik `Simpan Buku`. | 1. Data buku tersimpan.<br>2. Muncul pesan `Buku berhasil ditambahkan.`.<br>3. Judul buku terlihat pada halaman hasil. |
+| 4 | Lihat Detail Buku | Memastikan halaman detail bisa diakses. | 1. Login sebagai user.<br>2. Akses halaman detail `/books/{id}`. | 1. Judul buku tampil.<br>2. Penulis buku tampil. |
+| 5 | Update Sengaja Gagal (Negatif) | Memvalidasi alur gagal update sesuai kebutuhan pengujian. | 1. Login sebagai user.<br>2. Buka `/books/{id}/edit`.<br>3. Ubah salah satu field lalu klik `Perbarui Buku`. | 1. Redirect kembali ke `/books` (dashboard).<br>2. Muncul flash error `Buku gagal diperbarui.`.<br>3. Data buku tidak berubah. |
+| 6 | Hapus Buku Berhasil | Memastikan alur delete dengan konfirmasi berjalan. | 1. Login sebagai user.<br>2. Buka halaman `/books`.<br>3. Klik tombol hapus (ikon trash).<br>4. Konfirmasi dialog hapus. | 1. Muncul pesan `Buku berhasil dihapus.`.<br>2. Data buku tidak tampil lagi di tabel. |
+| 7 | Logout Berhasil | Memastikan user bisa logout setelah login. | 1. Login menggunakan akun valid.<br>2. Buka menu user (ikon user) di navbar.<br>3. Klik tombol `Logout`. | 1. Redirect ke `/login`.<br>2. Muncul pesan `Logout berhasil.`. |
 
-## Learning Laravel
+### Perintah Eksekusi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Menjalankan satu skenario tertentu:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+php artisan dusk --filter=Test
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Menjalankan seluruh skenario Dusk:
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan dusk
+```
